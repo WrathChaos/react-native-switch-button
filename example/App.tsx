@@ -8,7 +8,7 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import SwitchButton from "./build/dist/SwitchButton";
+import SwitchButton from "@freakycoder/react-native-switch-button";
 
 const App = () => {
   return (
