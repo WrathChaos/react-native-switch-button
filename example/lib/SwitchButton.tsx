@@ -1,13 +1,22 @@
 import React from "react";
-import { View, StyleProp, Image, Text, Animated, ViewStyle, ImageSourcePropType } from "react-native";
-import RNBounceable from "@freakycoder/react-native-bounceable"
+import {
+  View,
+  StyleProp,
+  Image,
+  Text,
+  Animated,
+  ViewStyle,
+  ImageSourcePropType,
+  TextStyle,
+  ImageStyle,
+} from "react-native";
+import RNBounceable from "@freakycoder/react-native-bounceable";
 /**
  * ? Local Imports
  */
-import styles, {_containerStyle} from "./SwitchButton.style";
+import styles, { _containerStyle, _imageStyle } from "./SwitchButton.style";
 
 const AnimatedRNBounceable = Animated.createAnimatedComponent(RNBounceable);
-
 
 const MAIN_COLOR = "#f1bb7b";
 const ORIGINAL_COLOR = "#fff";
@@ -16,20 +25,29 @@ const ORIGINAL_VALUE = 0;
 const ANIMATED_VALUE = 1;
 
 type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+type CustomTextStyleProp = StyleProp<TextStyle> | Array<StyleProp<TextStyle>>;
+type CustomImageStyleProp =
+  | StyleProp<ImageStyle>
+  | Array<StyleProp<ImageStyle>>;
 
 interface ISwitchButtonProps {
   style?: CustomStyleProp;
+  textStyle?: CustomTextStyleProp;
+  imageStyle?: CustomImageStyleProp;
+  textContainerStyle?: CustomTextStyleProp;
   activeImageSource: ImageSourcePropType;
   inactiveImageSource: ImageSourcePropType;
+  text?: string;
   mainColor?: string;
-  originalColor?: string;
   tintColor?: string;
+  disableText?: boolean;
+  originalColor?: string;
+  onPress: (isActive: boolean) => void;
 }
 
 interface IState {
-isActive: boolean;
+  isActive: boolean;
 }
-
 
 export default class SwitchButton extends React.Component<
   ISwitchButtonProps,
@@ -37,15 +55,13 @@ export default class SwitchButton extends React.Component<
 > {
   interpolatedColor: Animated.Value;
 
-
   constructor(props: ISwitchButtonProps) {
     super(props);
     this.interpolatedColor = new Animated.Value(ORIGINAL_VALUE);
     this.state = {
-      isActive: false
+      isActive: false,
     };
   }
-
 
   showOriginColor = () => {
     Animated.timing(this.interpolatedColor, {
@@ -63,7 +79,24 @@ export default class SwitchButton extends React.Component<
     }).start();
   };
 
-  render() {
+  handlePress = () => {
+    this.setState({ isActive: !this.state.isActive }, () => {
+      this.state.isActive ? this.showFocusColor() : this.showOriginColor();
+      this.props.onPress && this.props.onPress(this.state.isActive);
+    });
+  };
+
+  /* -------------------------------------------------------------------------- */
+  /*                               Render Methods                               */
+  /* -------------------------------------------------------------------------- */
+
+  renderBounceableButton = () => {
+    const {
+      style,
+      imageStyle,
+      activeImageSource,
+      inactiveImageSource,
+    } = this.props;
     const mainColor = this.props.mainColor || MAIN_COLOR;
     const originalColor = this.props.originalColor || ORIGINAL_COLOR;
     const tintColor = this.props.tintColor || TINT_COLOR;
@@ -75,21 +108,36 @@ export default class SwitchButton extends React.Component<
       inputRange: [ORIGINAL_VALUE, ANIMATED_VALUE],
       outputRange: [tintColor, originalColor],
     });
-
-    const { style, activeImageSource, inactiveImageSource } = this.props;
     return (
-      <View style={{alignItems: "center",
-      }}>
-        <AnimatedRNBounceable style={[_containerStyle(animatedBackgroundColor), style]} onPress={() => {this.setState({isActive: !this.state.isActive}, () => {
-          this.state.isActive ? this.showFocusColor() : this.showOriginColor()
-        })}} >
-          <Animated.Image source={this.state.isActive ? activeImageSource : inactiveImageSource} style={{ height: 30, width: 30, tintColor: animatedTintColor  }} />
-        </AnimatedRNBounceable>
-        <View style={{marginTop: 8}}>
-          <Text>Notification</Text>
+      <AnimatedRNBounceable
+        style={[_containerStyle(animatedBackgroundColor), style]}
+        onPress={this.handlePress}
+      >
+        <Animated.Image
+          source={this.state.isActive ? activeImageSource : inactiveImageSource}
+          style={[_imageStyle(animatedTintColor), imageStyle]}
+        />
+      </AnimatedRNBounceable>
+    );
+  };
+
+  renderText = () => {
+    const { text, textStyle, textContainerStyle } = this.props;
+    return (
+      !this.props.disableText && (
+        <View style={[styles.textContainerStyle, textContainerStyle]}>
+          <Text style={textStyle}>{text}</Text>
         </View>
+      )
+    );
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        {this.renderBounceableButton()}
+        {this.renderText()}
       </View>
     );
   }
-};
-
+}
