@@ -12,7 +12,7 @@
 
 <p align="center">
   <img alt="React Native Switch Button"
-        src="assets/Screenshots/react-native-switch-button.gif" height="850" />
+        src="assets/Screenshots/react-native-switch-button.gif" />
 </p>
 
 # Installation
