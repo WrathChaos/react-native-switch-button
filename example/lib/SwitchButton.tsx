@@ -11,7 +11,7 @@ const AnimatedRNBounceable = Animated.createAnimatedComponent(RNBounceable);
 
 const MAIN_COLOR = "#f1bb7b";
 const ORIGINAL_COLOR = "#fff";
-const PLACEHOLDER_COLOR = "#757575";
+const TINT_COLOR = "#f1bb7b";
 const ORIGINAL_VALUE = 0;
 const ANIMATED_VALUE = 1;
 
@@ -23,6 +23,7 @@ interface ISwitchButtonProps {
   inactiveImageSource: ImageSourcePropType;
   mainColor?: string;
   originalColor?: string;
+  tintColor?: string;
 }
 
 interface IState {
@@ -65,24 +66,24 @@ export default class SwitchButton extends React.Component<
   render() {
     const mainColor = this.props.mainColor || MAIN_COLOR;
     const originalColor = this.props.originalColor || ORIGINAL_COLOR;
-    let backgroundColor = this.interpolatedColor.interpolate({
+    const tintColor = this.props.tintColor || TINT_COLOR;
+    let animatedBackgroundColor = this.interpolatedColor.interpolate({
       inputRange: [ORIGINAL_VALUE, ANIMATED_VALUE],
       outputRange: [originalColor, mainColor],
     });
-
-    let tintColor = this.interpolatedColor.interpolate({
+    let animatedTintColor = this.interpolatedColor.interpolate({
       inputRange: [ORIGINAL_VALUE, ANIMATED_VALUE],
-      outputRange: [ mainColor,originalColor],
+      outputRange: [tintColor, originalColor],
     });
 
     const { style, activeImageSource, inactiveImageSource } = this.props;
     return (
       <View style={{alignItems: "center",
       }}>
-        <AnimatedRNBounceable style={[_containerStyle(backgroundColor), style]} onPress={() => {this.setState({isActive: !this.state.isActive}, () => {
+        <AnimatedRNBounceable style={[_containerStyle(animatedBackgroundColor), style]} onPress={() => {this.setState({isActive: !this.state.isActive}, () => {
           this.state.isActive ? this.showFocusColor() : this.showOriginColor()
         })}} >
-          <Animated.Image source={this.state.isActive ? activeImageSource : inactiveImageSource} style={{ height: 30, width: 30, tintColor: tintColor  }} />
+          <Animated.Image source={this.state.isActive ? activeImageSource : inactiveImageSource} style={{ height: 30, width: 30, tintColor: animatedTintColor  }} />
         </AnimatedRNBounceable>
         <View style={{marginTop: 8}}>
           <Text>Notification</Text>
