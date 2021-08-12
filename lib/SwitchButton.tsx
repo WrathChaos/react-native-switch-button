@@ -1,14 +1,13 @@
-import React from "react";
+import * as React from "react";
 import {
   View,
-  StyleProp,
-  Image,
   Text,
   Animated,
   ViewStyle,
-  ImageSourcePropType,
+  StyleProp,
   TextStyle,
   ImageStyle,
+  ImageSourcePropType,
 } from "react-native";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 /**

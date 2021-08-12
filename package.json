@@ -2,7 +2,7 @@
   "name": "react-native-typescript-library-starter",
   "version": "1.0.5",
   "description": "Extremely easy to create a React Native Component Library with both Stateful and Functional Component Examples.",
-  "main": "./build/dist/index.js",
+  "main": "./build/dist/SwitchButton.js",
   "repository": "git@github.com:WrathChaos/react-native-typescript-library-starter.git",
   "author": "FreakyCoder <kurayogun@gmail.com>",
   "license": "MIT",
