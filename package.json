@@ -1,6 +1,6 @@
 {
   "name": "@freakycoder/react-native-switch-button",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Animated switch button with fully customizable React Native Component",
   "main": "./build/dist/SwitchButton.js",
   "repository": "git@github.com:WrathChaos/react-native-switch-button.git",

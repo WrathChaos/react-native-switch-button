@@ -68,6 +68,7 @@ should work of the example project.
 | text                |    string    | undefined | set the text of the button                                         |
 | activeImageSource   | Image Source | undefined | set the active image source                                        |
 | inactiveImageSource | Image Source | undefined | set the inactive image source                                      |
+| isActive            |   boolean    |   false   | set the active state initially                                     |
 | onPress             |   function   |  default  | set your own logic for onPress functionality                       |
 | mainColor           |    string    |  #f1bb7b  | change the main animated color                                     |
 | originalColor       |    string    |   #fff    | change the original/default animated color                         |

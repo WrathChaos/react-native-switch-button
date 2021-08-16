@@ -8,7 +8,7 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import SwitchButton from "@freakycoder/react-native-switch-button";
+import SwitchButton from "./lib/SwitchButton";
 
 const App = () => {
   return (
@@ -35,7 +35,7 @@ const App = () => {
             color: "#f1bb7b",
             fontWeight: "600",
           }}
-          onPress={(isActive: boolean) => console.log(isActive)}
+          onPress={(isActive: boolean) => alert(isActive)}
         />
         <SwitchButton
           inactiveImageSource={require("./assets/fingerprint.png")}
@@ -50,6 +50,7 @@ const App = () => {
           onPress={(isActive: boolean) => console.log(isActive)}
         />
         <SwitchButton
+          isActive
           inactiveImageSource={require("./assets/location-pin.png")}
           mainColor="#fc583b"
           tintColor="#fc583b"
