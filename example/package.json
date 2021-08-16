@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@freakycoder/react-native-bounceable": "^0.2.5",
-    "@freakycoder/react-native-switch-button": "^0.1.0",
+    "@freakycoder/react-native-switch-button": "^0.1.1",
     "react": "17.0.1",
     "react-native": "0.64.1"
   },
